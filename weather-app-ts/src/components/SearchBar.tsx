@@ -6,7 +6,7 @@ interface ISearchBar {
   searchTerm: string;
   setSearchTerm: Dispatch<SetStateAction<string>>;
   options: string[];
-  errorMsg?: string
+  errorMsg?: string;
 }
 
 function SearchBar({
@@ -15,7 +15,7 @@ function SearchBar({
   searchTerm,
   setSearchTerm,
   options,
-  errorMsg
+  errorMsg,
 }: ISearchBar) {
   const [showOptions, setShowOptions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,20 +36,16 @@ function SearchBar({
             className="w-full focus:border-none focus:outline-none bg-white bg-opacity-0 relative top-[-2px]"
             type="text"
             onChange={(e) => {
-              
               const newSearchTerm = e.target.value;
               setSearchTerm(newSearchTerm);
               setShowOptions(!!newSearchTerm);
-              
             }}
             value={searchTerm}
           />
         </div>
 
         {showOptions && (
-          <div
-            className="overflow-auto"
-          >
+          <div className="overflow-auto">
             <div className="grid grid-cols-1 divide-y max-h-40 overflow-auto text-sm px-2 z-10 absolute top-[64px] bg-[#BCA6E8] shadow-md rounded-lg">
               {options.length > 0 ? (
                 options.map((optionText) => (
@@ -66,7 +62,12 @@ function SearchBar({
                   </div>
                 ))
               ) : (
-                <div className="py-1" style={{ width: `${widthOfOptionsDropdown}px` }}>No matching country name...</div>
+                <div
+                  className="py-1"
+                  style={{ width: `${widthOfOptionsDropdown}px` }}
+                >
+                  No matching country name...
+                </div>
               )}
             </div>
           </div>
@@ -76,7 +77,10 @@ function SearchBar({
       <button
         className="bg-[#6C40BF] rounded-lg size-10"
         type="button"
-        onClick={handleSearch}
+        onClick={() => {
+          setShowOptions(false);
+          handleSearch();
+        }}
       >
         Search
       </button>
