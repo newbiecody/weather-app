@@ -1,16 +1,18 @@
+import { ReactNode } from "react";
+
 interface IRoundedButton {
-  text: string;
-  onClick?: () => {};
+  children: ReactNode;
+  onClick?: () => void;
 }
 
-function RoundedButton({ text, onClick }: IRoundedButton) {
+function RoundedButton({ children, onClick }: IRoundedButton) {
   return (
     <button
       type="button"
-      className="rounded-full shadow-md size-[34px] bg-white"
+      className="flex justify-center items-center rounded-full shadow-md size-[34px] bg-white"
       onClick={onClick}
     >
-      {text}
+      {children}
     </button>
   );
 }

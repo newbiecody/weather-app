@@ -1,4 +1,6 @@
 import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react";
+import searchIconPath from "../assets/search.svg";
+import classNames from "classnames";
 
 interface ISearchBar {
   label: string;
@@ -7,6 +9,7 @@ interface ISearchBar {
   setSearchTerm: Dispatch<SetStateAction<string>>;
   options: string[];
   errorMsg?: string;
+  isSearchDisabled?: boolean;
 }
 
 function SearchBar({
@@ -15,7 +18,8 @@ function SearchBar({
   searchTerm,
   setSearchTerm,
   options,
-  errorMsg,
+  // errorMsg,
+  isSearchDisabled,
 }: ISearchBar) {
   const [showOptions, setShowOptions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,10 +30,11 @@ function SearchBar({
     if (inputRef?.current?.offsetWidth)
       setWidthOfOptionsDropdown(inputRef.current?.offsetWidth);
   });
+
   return (
     <div className="flex w-full space-x-2">
       <div className="w-full">
-        <div className="bg-opacity-20 rounded-lg bg-white pt-1 px-2">
+        <div className="bg-opacity-20 rounded-lg bg-white pt-1 px-2 shadow-md">
           <div className="text-[10px]">{label}</div>
           <input
             ref={inputRef}
@@ -75,14 +80,21 @@ function SearchBar({
       </div>
 
       <button
-        className="bg-[#6C40BF] rounded-lg size-10"
+        disabled={isSearchDisabled}
+        className={classNames(
+          "flex justify-center items-center bg-[#6C40BF] rounded-lg size-10 text-white shadow-md",
+          {
+            "opacity-60": isSearchDisabled,
+          }
+        )}
         type="button"
         onClick={() => {
           setShowOptions(false);
           handleSearch();
+          setSearchTerm("");
         }}
       >
-        Search
+        <img src={searchIconPath} alt={`Check country's temperature`} />
       </button>
     </div>
   );
