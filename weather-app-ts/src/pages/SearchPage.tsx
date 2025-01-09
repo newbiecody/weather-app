@@ -11,7 +11,6 @@ import {
 } from "../utils";
 import cloudImagePath from "../assets/cloud.png";
 import sunImagePath from "../assets/sun.png";
-import { WEATHER_CONDITIONS_MAP } from "../constants";
 
 type IWeatherDataLocalStorage = Record<
   string,
